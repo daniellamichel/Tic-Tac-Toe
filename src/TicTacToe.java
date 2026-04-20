@@ -2,6 +2,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 
@@ -14,6 +16,13 @@ public class TicTacToe {
     JLabel textLabel = new JLabel();
     JPanel textPanel = new JPanel();
     JPanel boardPanel = new JPanel();
+
+    JButton[][] board = new JButton[3][3];
+    String playerX = "X";
+    String playerO = "O";
+    String currentPlayer = playerX;
+
+
 
     // tictactoe window created with exit
     TicTacToe() {
@@ -38,6 +47,30 @@ public class TicTacToe {
         boardPanel.setLayout(new GridLayout(3, 3));
         boardPanel.setBackground(Color.darkGray);
         frame.add(boardPanel);
+
+        for (int r = 0; r < 3; r++) { // 3 rows
+            for (int c = 0; c < 3; c++) { // 3 columns
+                JButton tile = new JButton(); // 
+                board[r][c] = tile;
+                boardPanel.add(tile); // adds the rows and columns
+
+                tile.setBackground(Color.darkGray);
+                tile.setForeground(Color.black);
+                tile.setFont(new Font( "Georgia", Font.BOLD, 120));
+                tile.setFocusable(false);
+                // tile.setText(currentPlayer);
+
+                tile.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        JButton tile = (JButton) e.getSource();
+                        tile.setText(currentPlayer);
+
+                        currentPlayer = currentPlayer == playerX ? playerO : playerX;
+                        textLabel.setText((currentPlayer + "'s turn."));
+                    }
+                });
+            }
+        }
     }
 
 }
